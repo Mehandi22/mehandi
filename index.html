@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tejomai Mehandi Art</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #faf8f4;
+    --bg2:       #f4f0e8;
+    --bg3:       #efe9db;
+    --gold:      #b8860b;
+    --gold-mid:  #c9982a;
+    --gold-lite: #e8c96a;
+    --gold-pale: #f5e8c0;
+    --ink:       #2c2014;
+    --ink-soft:  #5a4a30;
+    --border:    rgba(184,134,11,0.22);
+    --border-h:  rgba(184,134,11,0.55);
+    --shadow:    rgba(100,70,20,0.10);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(ellipse 80% 40% at 50% -5%, rgba(212,175,55,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 30% at 80% 110%, rgba(212,175,55,0.05) 0%, transparent 60%);
+    pointer-events:none; z-index:0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position:relative; z-index:10;
+    text-align:center;
+    padding: 54px 24px 44px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .orn-row {
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    margin-bottom:20px;
+    animation: fadeDown 0.9s ease both;
+  }
+  .orn-line { width:60px; height:1px; background:linear-gradient(to right, transparent, var(--gold-mid)); }
+  .orn-line.rev { background:linear-gradient(to left, transparent, var(--gold-mid)); }
+  .orn-lotus { width:32px; height:32px; opacity:0.75; }
+
+  .artist-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--gold-pale);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 5px 18px;
+    font-size:0.78rem; letter-spacing:0.2em; text-transform:uppercase;
+    color: var(--gold);
+    font-family:'Cinzel', serif;
+    margin-bottom:22px;
+    animation: fadeDown 0.9s ease 0.15s both;
+  }
+  .artist-dot { width:5px; height:5px; background:var(--gold-mid); border-radius:50%; }
+
+  .header-title {
+    font-family:'Playfair Display', serif;
+    font-size: clamp(2.4rem,8vw,4.6rem);
+    font-weight:700; font-style:italic;
+    color: var(--ink);
+    line-height:1.15;
+    animation: fadeDown 0.9s ease 0.25s both;
+  }
+  .header-title span {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-mid) 50%, var(--gold-lite) 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .header-tagline {
+    font-style:italic;
+    font-size: clamp(1rem,2.5vw,1.25rem);
+    color: var(--ink-soft);
+    margin-top:12px; letter-spacing:0.06em;
+    animation: fadeDown 0.9s ease 0.35s both;
+  }
+  .header-credits {
+    margin-top:24px;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:6px 24px;
+    animation: fadeDown 0.9s ease 0.45s both;
+  }
+  .credit-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+  .credit-label {
+    font-family:'Cinzel', serif;
+    font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold);
+  }
+  .credit-name {
+    font-family:'Playfair Display', serif;
+    font-style:italic; font-size:1.05rem; color:var(--ink);
+  }
+  .credit-sep { color:var(--border-h); font-size:1.3rem; align-self:center; }
+  .hdr-divider {
+    display:flex; align-items:center; gap:14px;
+    max-width:340px; margin:26px auto 0;
+    animation: fadeDown 0.9s ease 0.5s both;
+  }
+  .hdr-divider-line { flex:1; height:1px; background:linear-gradient(to right, transparent, var(--gold-mid), transparent); }
+  .hdr-divider-gem { width:7px; height:7px; background:var(--gold-mid); transform:rotate(45deg); flex-shrink:0; }
+
+  /* ── TABS ── */
+  .tabs-wrap {
+    position:sticky; top:0; z-index:20;
+    background:rgba(250,248,244,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .tabs {
+    display:flex; justify-content:center;
+    overflow-x:auto; scrollbar-width:none;
+    max-width:800px; margin:0 auto;
+  }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab {
+    font-family:'Cinzel', serif;
+    font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase;
+    color: var(--ink-soft);
+    padding:15px 22px;
+    border:none; background:none; cursor:pointer;
+    border-bottom:2px solid transparent;
+    transition:color 0.25s;
+    white-space:nowrap;
+    position:relative;
+  }
+  .tab::after {
+    content:''; position:absolute;
+    bottom:-2px; left:50%; right:50%; height:2px;
+    background:var(--gold);
+    transition: left 0.3s, right 0.3s;
+  }
+  .tab:hover { color:var(--gold-mid); }
+  .tab:hover::after { left:20%; right:20%; }
+  .tab.active { color:var(--gold); }
+  .tab.active::after { left:0; right:0; }
+
+  /* ── MAIN ── */
+  main {
+    position:relative; z-index:5;
+    max-width:1080px; margin:0 auto;
+    padding:48px 20px 90px;
+  }
+  .section { display:none; }
+  .section.visible { display:block; }
+  .section-header { text-align:center; margin-bottom:44px; animation:fadeUp 0.5s ease both; }
+  .section-title {
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size: clamp(1.6rem,4vw,2.4rem);
+    color:var(--ink); margin-bottom:10px;
+  }
+  .section-title span { color:var(--gold); }
+  .section-desc {
+    font-style:italic; font-size:1.08rem; color:var(--ink-soft);
+    max-width:500px; margin:0 auto; line-height:1.75;
+  }
+
+  /* ── GRID ── */
+  .designs-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(255px,1fr));
+    gap:28px;
+  }
+  .design-card {
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:3px; overflow:hidden; cursor:pointer;
+    transition:transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s, border-color 0.3s;
+    animation:fadeUp 0.55s ease both;
+    position:relative;
+  }
+  .design-card:hover {
+    transform:translateY(-7px);
+    box-shadow:0 18px 50px var(--shadow), 0 0 0 1px var(--border-h);
+    border-color:var(--border-h);
+  }
+  .design-card::before {
+    content:''; position:absolute; top:0; left:0;
+    width:36px; height:36px;
+    background:linear-gradient(135deg, var(--gold-pale) 0%, transparent 70%);
+    z-index:2; opacity:0; transition:opacity 0.3s;
+  }
+  .design-card:hover::before { opacity:1; }
+
+  .img-wrap { aspect-ratio:3/4; overflow:hidden; background:var(--bg2); position:relative; }
+  .img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 0.55s ease; display:block; }
+  .design-card:hover .img-wrap img { transform:scale(1.07); }
+
+
+  .card-body { padding:16px 18px 18px; border-top:1px solid var(--border); background:#fff; }
+  .card-name { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:500; color:var(--ink); }
+
+  .design-card:nth-child(1){animation-delay:.05s}
+  .design-card:nth-child(2){animation-delay:.1s}
+  .design-card:nth-child(3){animation-delay:.15s}
+  .design-card:nth-child(4){animation-delay:.2s}
+  .design-card:nth-child(5){animation-delay:.25s}
+  .design-card:nth-child(6){animation-delay:.3s}
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display:none; position:fixed; inset:0; z-index:100;
+    background:rgba(44,32,20,0.6);
+    backdrop-filter:blur(10px);
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .lightbox.open { display:flex; animation:fadeIn 0.3s ease; }
+  .lb-inner {
+    max-width:460px; width:100%;
+    background:#fff;
+    border:1px solid var(--border-h); border-radius:3px; overflow:hidden;
+    position:relative;
+    box-shadow:0 30px 80px rgba(100,70,20,0.25);
+    animation:scaleIn 0.3s cubic-bezier(.2,.8,.2,1);
+  }
+  .lb-img { width:100%; aspect-ratio:3/4; object-fit:cover; display:block; }
+
+  .lb-info { padding:26px 28px 28px; border-top:1px solid var(--border); }
+  .lb-name { font-family:'Playfair Display',serif; font-style:italic; font-size:1.5rem; color:var(--ink); margin-bottom:10px; }
+  .lb-desc { font-style:italic; font-size:1.05rem; color:var(--ink-soft); line-height:1.75; margin-bottom:16px; }
+  .lb-close {
+    position:absolute; top:12px; right:12px;
+    width:34px; height:34px;
+    background:rgba(255,255,255,0.85);
+    border:1px solid var(--border); border-radius:50%;
+    color:var(--ink); font-size:1rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.2s, border-color 0.2s; z-index:10;
+  }
+  .lb-close:hover { background:var(--gold-pale); border-color:var(--border-h); }
+
+  /* ── FOOTER ── */
+  footer {
+    position:relative; z-index:5; text-align:center;
+    padding:36px 24px;
+    border-top:1px solid var(--border); background:var(--bg);
+  }
+  .footer-orn { margin-bottom:14px; display:flex; align-items:center; justify-content:center; gap:12px; }
+  .footer-orn-line { width:50px; height:1px; background:linear-gradient(to right, transparent, var(--gold-mid)); }
+  .footer-orn-line.rev { background:linear-gradient(to left, transparent, var(--gold-mid)); }
+  .footer-gem { width:6px; height:6px; background:var(--gold-mid); transform:rotate(45deg); }
+  .footer-text { font-style:italic; font-size:1rem; color:var(--ink-soft); }
+  .footer-names { margin-top:10px; font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:none} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+  @keyframes scaleIn { from{opacity:0;transform:scale(0.93)} to{opacity:1;transform:scale(1)} }
+
+  @media(max-width:480px){
+    .designs-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+    .card-body{padding:12px 13px 14px;}
+    .card-name{font-size:1rem;}
+    .tab{padding:13px 14px;font-size:0.66rem;}
+  }
+
+  /* ── STAMPS TAB SPECIAL STYLE ── */
+  .tab-stamp { color: var(--gold) !important; }
+  .tab-stamp.active { color: var(--gold) !important; }
+
+  /* ── STAMPS GRID ── */
+  .stamps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+  }
+
+  .stamp-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s, border-color 0.3s;
+    animation: fadeUp 0.55s ease both;
+    position: relative;
+  }
+  .stamp-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 40px var(--shadow), 0 0 0 1px var(--border-h);
+    border-color: var(--border-h);
+  }
+  .stamp-card::before {
+    content:''; position:absolute; top:0; left:0;
+    width:28px; height:28px;
+    background:linear-gradient(135deg, var(--gold-pale) 0%, transparent 70%);
+    z-index:2; opacity:0; transition:opacity 0.3s;
+  }
+  .stamp-card:hover::before { opacity:1; }
+
+  .stamp-img-wrap {
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+  .stamp-img-wrap img {
+    width:100%; height:100%;
+    object-fit:cover;
+    transition:transform 0.55s ease;
+    display:block;
+  }
+  .stamp-card:hover .stamp-img-wrap img { transform:scale(1.08); }
+
+  .stamp-label {
+    padding: 11px 13px 13px;
+    border-top: 1px solid var(--border);
+    background: #fff;
+  }
+  .stamp-name {
+    font-family:'Playfair Display',serif;
+    font-size:0.95rem; font-weight:500;
+    color:var(--ink); margin-bottom:5px;
+  }
+  .stamp-tag {
+    font-family:'Cinzel',serif; font-size:0.6rem;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--gold);
+  }
+
+  .stamp-card:nth-child(1){animation-delay:.05s}
+  .stamp-card:nth-child(2){animation-delay:.1s}
+  .stamp-card:nth-child(3){animation-delay:.15s}
+  .stamp-card:nth-child(4){animation-delay:.2s}
+  .stamp-card:nth-child(5){animation-delay:.25s}
+  .stamp-card:nth-child(6){animation-delay:.3s}
+  .stamp-card:nth-child(7){animation-delay:.35s}
+  .stamp-card:nth-child(8){animation-delay:.4s}
+
+  @media(max-width:480px){
+    .stamps-grid{grid-template-columns:repeat(3,1fr);gap:12px;}
+    .stamp-label{padding:9px 10px 11px;}
+    .stamp-name{font-size:0.82rem;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="orn-row">
+    <div class="orn-line rev"></div>
+    <svg class="orn-lotus" viewBox="0 0 60 60" fill="none">
+      <path d="M30 50 Q20 35 22 20 Q30 28 30 50Z" stroke="#b8860b" stroke-width="1.3" fill="none" opacity="0.8"/>
+      <path d="M30 50 Q40 35 38 20 Q30 28 30 50Z" stroke="#b8860b" stroke-width="1.3" fill="none" opacity="0.8"/>
+      <path d="M30 50 Q12 38 14 22 Q22 32 30 50Z" stroke="#b8860b" stroke-width="1.1" fill="none" opacity="0.55"/>
+      <path d="M30 50 Q48 38 46 22 Q38 32 30 50Z" stroke="#b8860b" stroke-width="1.1" fill="none" opacity="0.55"/>
+      <path d="M30 50 Q8 44 12 28 Q20 38 30 50Z" stroke="#b8860b" stroke-width="0.9" fill="none" opacity="0.35"/>
+      <path d="M30 50 Q52 44 48 28 Q40 38 30 50Z" stroke="#b8860b" stroke-width="0.9" fill="none" opacity="0.35"/>
+      <circle cx="30" cy="28" r="3" fill="#b8860b" opacity="0.7"/>
+    </svg>
+    <div class="orn-line"></div>
+  </div>
+
+  <div class="artist-badge">
+    <div class="artist-dot"></div>
+    Mehandi Art by Tejomai
+    <div class="artist-dot"></div>
+  </div>
+
+  <h1 class="header-title"><span>Tejomai</span> Mehandi</h1>
+  <p class="header-tagline">Browse our designs &amp; choose the one that calls to you</p>
+
+  <div class="header-credits">
+    <div class="credit-item">
+      <span class="credit-label">Artist</span>
+      <span class="credit-name">Tejomai Borigorla</span>
+    </div>
+    <div class="credit-sep">✦</div>
+    <div class="credit-item">
+      <span class="credit-label">Stall by</span>
+      <span class="credit-name"><p>Mohit Yaduvamsi</p><p>Anand Tanniru</p></span>
+    </div>
+  </div>
+
+  <div class="hdr-divider">
+    <div class="hdr-divider-line"></div>
+    <div class="hdr-divider-gem"></div>
+    <div class="hdr-divider-line"></div>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-section="mehandi">Mehandi</button>
+    <button class="tab tab-stamp" data-section="stamps">✦ Stamps</button>
+  </nav>
+</div>
+
+<main>
+  <div class="section visible" id="sec-mehandi">
+    <div class="section-header">
+      <h2 class="section-title">Mehandi <span>Designs</span></h2>
+      <p class="section-desc">Browse our full collection — pick the one that calls to you.</p>
+    </div>
+    <div class="designs-grid" id="grid-mehandi"></div>
+  </div>
+
+  <div class="section" id="sec-stamps">
+    <div class="section-header">
+      <h2 class="section-title">Mehandi <span>Stamps</span></h2>
+      <p class="section-desc">Quick, precise stamp patterns — perfect for fingertips, wrists, and festive touch-ups.</p>
+    </div>
+    <div class="stamps-grid" id="grid-stamps"></div>
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <div class="lb-inner" id="lb-inner">
+    <button class="lb-close" id="lb-close">✕</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-orn">
+    <div class="footer-orn-line rev"></div>
+    <div class="footer-gem"></div>
+    <div class="footer-orn-line"></div>
+  </div>
+  <p class="footer-text">Come visit us at our stall — we'd love to adorn your hands ✦</p>
+  <p class="footer-names">Mohit Yaduvamsi &nbsp;·&nbsp; Anand Tanniru</p>
+</footer>
+
+<script>
+const designs=[
+  {id:1,  name:"Design 1",  desc:"", img:"/home/mohit/pic1.jpeg"},
+  {id:2,  name:"Design 2",  desc:"", img:"/home/mohit/pic2.jpeg"},
+  {id:3,  name:"Design 3",  desc:"", img:"/home/mohit/pic3.jpeg"},
+  {id:4,  name:"Design 4",  desc:"", img:"/home/mohit/pic4.jpeg"},
+  {id:5,  name:"Design 5",  desc:"", img:"/home/mohit/pic5.jpeg"},
+  {id:6,  name:"Design 6",  desc:"", img:"/home/mohit/pic6.jpeg"},
+  {id:7,  name:"Design 7",  desc:"", img:"/home/mohit/pic7.jpeg"},
+  {id:8,  name:"Design 8",  desc:"", img:"/home/mohit/pic8.jpeg"},
+  {id:9,  name:"Design 9",  desc:"", img:"/home/mohit/pic9.jpeg"},
+  {id:10, name:"Design 10", desc:"", img:"/home/mohit/pic10.jpeg"},
+  {id:11, name:"Design 11", desc:"", img:"/home/mohit/pic11.jpeg"},
+  {id:12, name:"Design 12", desc:"", img:"/home/mohit/pic12.jpeg"},
+  {id:1,  name:"Design 13",  desc:"", img:"/home/mohit/pic13.jpeg"},
+  {id:2,  name:"Design 14",  desc:"", img:"/home/mohit/pic14.jpeg"},
+  {id:3,  name:"Design 15",  desc:"", img:"/home/mohit/pic15.jpeg"},
+  {id:4,  name:"Design 16",  desc:"", img:"/home/mohit/pic16.jpeg"},
+  {id:5,  name:"Design 17",  desc:"", img:"/home/mohit/pic17.jpeg"},
+  {id:6,  name:"Design 18",  desc:"", img:"/home/mohit/pic18.jpeg"},
+  {id:7,  name:"Design 19",  desc:"", img:"/home/mohit/pic19.jpeg"},
+  {id:8,  name:"Design 20",  desc:"", img:"/home/mohit/pic20.jpeg"},
+  {id:9,  name:"Design 21",  desc:"", img:"/home/mohit/pic21.jpeg"},
+  {id:10, name:"Design 22", desc:"", img:"/home/mohit/pic22.jpeg"},
+  {id:11, name:"Design 23", desc:"", img:"/home/mohit/pic23.jpeg"},
+  {id:12, name:"Design 24", desc:"", img:"/home/mohit/pic24.jpeg"},
+  {id:1,  name:"Design 25",  desc:"", img:"/home/mohit/pic25.jpeg"},
+  {id:2,  name:"Design 26",  desc:"", img:"/home/mohit/pic26.jpeg"},
+  {id:3,  name:"Design 27",  desc:"", img:"/home/mohit/pic27.jpeg"},
+  {id:4,  name:"Design 28",  desc:"", img:"/home/mohit/pic28.jpeg"},
+  {id:5,  name:"Design 29",  desc:"", img:"/home/mohit/pic29.jpeg"},
+  {id:6,  name:"Design 30",  desc:"", img:"/home/mohit/pic30.jpeg"},
+  {id:7,  name:"Design 31",  desc:"", img:"/home/mohit/pic31.jpeg"},
+  {id:8,  name:"Design 32",  desc:"", img:"/home/mohit/pic32.jpeg"},
+  {id:9,  name:"Design 33",  desc:"", img:"/home/mohit/pic33.jpeg"},
+];
+
+function buildCard(d){
+  const el=document.createElement('div');
+  el.className='design-card';
+  el.innerHTML=`<div class="img-wrap"><img src="${d.img}" alt="${d.name}" loading="lazy"></div><div class="card-body"><div class="card-name">${d.name}</div></div>`;
+  el.addEventListener('click',()=>openLB(d));
+  return el;
+}
+
+const mehandiGrid=document.getElementById('grid-mehandi');
+designs.forEach(d=>mehandiGrid.appendChild(buildCard(d)));
+
+function openLB(d){
+  document.getElementById('lb-inner').innerHTML=`<button class="lb-close" id="lb-close">✕</button><img class="lb-img" src="${d.img}" alt="${d.name}"><div class="lb-info"><div class="lb-name">${d.name}</div>${d.desc?`<div class="lb-desc">${d.desc}</div>`:''}</div>`;
+  document.getElementById('lightbox').classList.add('open');
+  document.getElementById('lb-close').addEventListener('click',closeLB);
+}
+function closeLB(){document.getElementById('lightbox').classList.remove('open');}
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLB();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+
+// ── STAMPS ──
+const stamps=[
+  {id:1,  name:"Folk Dance",     tag:"A Tribal Tale",  img:"/home/mohit/Downloads/s1.jpeg"},
+  {id:2,  name:"Peacock Reddy",     tag:"Royal Crest",  img:"/home/mohit/Downloads/s2.jpeg"},
+  {id:3,  name:"Pushpa",     tag:"Beat of Soul",      img:"/home/mohit/Downloads/s3.jpeg"},
+  {id:4,  name:"Bird of Bloom",     tag:"The Henna Songbird",  img:"/home/mohit/Downloads/s4.jpeg"},
+  {id:5,  name:"Flora Mandala",tag:"The Timeless Bloom",        img:"/home/mohit/Downloads/s5.jpeg"},
+  {id:6,  name:"Crimson Bloom",      tag:"The Royal Henna",  img:"/home/mohit/Downloads/s6.jpeg"},
+  {id:7,  name:"Minimal Flora",    tag:"Pure and Yours",      img:"/home/mohit/Downloads/s7.jpeg"},
+  {id:8,  name:"The leafy Catalyst",       tag:"Decor the Corner",        img:"/home/mohit/Downloads/s8.jpeg"},
+  {id:9,  name:"Gul-e-Noor",     tag:"Radiant Blossom",  img:"/home/mohit/Downloads/s9.jpeg"},
+  {id:10,  name:"Leafy Mandala",     tag:"Pure Blossom",  img:"/home/mohit/Downloads/s10.jpeg"},
+  {id:11,  name:"Flower",     tag:"Blossom",      img:"/home/mohit/Downloads/s11.jpeg"},
+  {id:12,  name:"Mandala Cut",     tag:"Vintage Tradition",  img:"/home/mohit/Downloads/s12.jpeg"},
+  {id:13,  name:"Just a Flower",tag:"Simple and Elegant",        img:"/home/mohit/Downloads/s13.jpeg"},
+  {id:14,  name:"Kalka Bloom",      tag:"Timeless Paisley",  img:"/home/mohit/Downloads/s14.jpeg"},
+  {id:15,  name:"Bloom Red",    tag:"Floral Charm",      img:"/home/mohit/Downloads/s15.jpeg"},
+  {id:16,  name:"Aaryahi",       tag:"The Eternal Bloom",        img:"/home/mohit/Downloads/s16.jpeg"},
+  {id:17,  name:"Red Vine",     tag:"Classic Nature's stroke",  img:"/home/mohit/Downloads/s17.jpeg"},
+  {id:18,  name:"Ruby Bloom",     tag:"Traditional Soul",  img:"/home/mohit/Downloads/s18.jpeg"},
+  {id:19,  name:"Gul-e-Bahar",     tag:"Floral Elegance in every curve",      img:"/home/mohit/Downloads/s19.jpeg"},
+  {id:20,  name:"Royal Mandala",     tag:"Ancient Elegance, Modren Charm",  img:"/home/mohit/Downloads/s20.jpeg"},
+  {id:21,  name:"Mandala Bloom",tag:"Timeless Petals",        img:"/home/mohit/Downloads/s21.jpeg"},
+  {id:22,  name:"Saffron Bloom",      tag:"Boldly Etched",  img:"/home/mohit/Downloads/s22.jpeg"},
+
+];
+
+const stampGrid=document.getElementById('grid-stamps');
+stamps.forEach(s=>{
+  const el=document.createElement('div');
+  el.className='stamp-card';
+  el.innerHTML=`<div class="stamp-img-wrap"><img src="${s.img}" alt="${s.name}" loading="lazy"></div><div class="stamp-label"><div class="stamp-name">${s.name}</div><div class="stamp-tag">${s.tag}</div></div>`;
+  el.addEventListener('click',()=>{
+    document.getElementById('lb-inner').innerHTML=`<button class="lb-close" id="lb-close">✕</button><img class="lb-img" src="${s.img}" alt="${s.name}" style="aspect-ratio:1/1"><div class="lb-info"><div class="lb-name">${s.name}</div><div class="lb-desc">A quick stamp pattern — great for fingertips, wrists, or adding detail to a larger design.</div><div class="card-tags"><span class="tag">${s.tag}</span><span class="tag">Stamp</span></div></div>`;
+    document.getElementById('lightbox').classList.add('open');
+    document.getElementById('lb-close').addEventListener('click',closeLB);
+  });
+  stampGrid.appendChild(el);
+});
+
+document.getElementById('tabs').addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(!tab)return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('visible'));
+  tab.classList.add('active');
+  document.getElementById('sec-'+tab.dataset.section)?.classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script>
+</body>
+</html>
